@@ -1,5 +1,4 @@
 # Aula 2: Importação
-from turtle import left
 import pandas as pd
 
 file = "Cópia de Imersão Python - Tabela de ações.xlsx"
