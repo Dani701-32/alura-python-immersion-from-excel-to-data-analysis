@@ -1,5 +1,6 @@
 # Aula 2: Importação
 import pandas as pd
+import plotly.express as px
 
 file = "Cópia de Imersão Python - Tabela de ações.xlsx"
 
@@ -71,11 +72,13 @@ print(f'Maior\tR$ {maxValue:,.2f}')
 print(f'Menor\tR$ {minValue:,.2f}')
 print(f'Média\tR$ {averageValue:,.2f}')
 print(f'Média de quem Subiu\tR$ {averageUpValue:,.2f}')
-print(f'Média de quem Desceu\tR$ {averageDownValue:,.2f}')
+print(f'Média de quem Desceu\tR$ {averageDownValue:,.2f}\n')
 
 df_principal_subiu = df_principal[df_principal["result"] == "Subiu"]
 
 df_analise_segment = df_principal_subiu.groupby('Segmento')['var_rs'].sum().reset_index()
 
 df_analise_saldo = df_principal.groupby('result')['var_rs'].sum().reset_index()
-print(df_analise_saldo)
+
+fig = px.bar(df_analise_saldo, x="result", y='var_rs', text='var_rs', title='Variação Reais por Resultado')
+fig.show()
