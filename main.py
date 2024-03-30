@@ -53,8 +53,29 @@ df_principal = df_principal.drop(columns=["Nome da Empresa"])
 
 df_principal = df_principal.rename(columns={"Idade (em anos)": "age"}).copy()
 
-df_principal['age_detail'] = df_principal["age"].apply(
-    lambda x: "Mais de 100" if x > 100 else ("Menos de 50" if x < 50 else "Entre 100 e 50")
+df_principal["age_detail"] = df_principal["age"].apply(
+    lambda x: (
+        "Mais de 100" if x > 100 else ("Menos de 50" if x < 50 else "Entre 100 e 50")
+    )
 )
 
-print(df_principal.head(10))
+#Analises
+
+maxValue = df_principal["var_rs"].max()
+minValue = df_principal["var_rs"].min()
+averageValue = df_principal["var_rs"].mean()
+averageUpValue = df_principal[df_principal["result"] == "Subiu"]["var_rs"].mean()
+averageDownValue = df_principal[df_principal["result"] == "Desceu"]["var_rs"].mean()
+
+print(f'Maior\tR$ {maxValue:,.2f}')
+print(f'Menor\tR$ {minValue:,.2f}')
+print(f'Média\tR$ {averageValue:,.2f}')
+print(f'Média de quem Subiu\tR$ {averageUpValue:,.2f}')
+print(f'Média de quem Desceu\tR$ {averageDownValue:,.2f}')
+
+df_principal_subiu = df_principal[df_principal["result"] == "Subiu"]
+
+df_analise_segment = df_principal_subiu.groupby('Segmento')['var_rs'].sum().reset_index()
+
+df_analise_saldo = df_principal.groupby('result')['var_rs'].sum().reset_index()
+print(df_analise_saldo)
