@@ -1,5 +1,5 @@
 # Aula 4: Análises Avançadas de Ações e Gráficos de Velas
-import pandas as pd
+# import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.dates as mdates
