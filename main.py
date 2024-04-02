@@ -72,67 +72,85 @@ ax.xaxis_date()  # O Método é usado para dizer ao matplotlib que as datas est�
 ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
 plt.xticks(rotation=45)
 
-#adicionando titulo e rotulos para os eixos x e y
+# adicionando titulo e rotulos para os eixos x e y
 plt.title("Gráfico de candlestic - Petra.SA com matplotlib")
 plt.xlabel("Date")
 plt.ylabel("Price")
 
-#adicionando uma grade para facilitar a visiualização dos valores
+# adicionando uma grade para facilitar a visiualização dos valores
 plt.grid(True)
 
 # Criando subplots
-'''
+"""
 "Primeiro, criamos uma figura que conterá nossos gráficos usando make_subplots.
 Isso nos permite ter múltiplos gráficos em uma única visualização.
 Aqui, teremos dois subplots: um para o gráfico de candlestick e outro para o volume de transações."
 
-'''
-fig = make_subplots(rows=2, cols=1, shared_xaxes=True,
-                    vertical_spacing=0.1,
-                    subplot_titles=('Candlesticks', 'Volume Transacionado'),
-                    row_width=[0.2, 0.7])
+"""
+fig = make_subplots(
+    rows=2,
+    cols=1,
+    shared_xaxes=True,
+    vertical_spacing=0.1,
+    subplot_titles=("Candlesticks", "Volume Transacionado"),
+    row_width=[0.2, 0.7],
+)
 
-'''
+"""
 "No gráfico de candlestick, cada candle representa um dia de negociação,
 mostrando o preço de abertura, fechamento, máximo e mínimo. Vamos adicionar este gráfico à nossa figura."
-'''
+"""
 # Adicionando o gráfico de candlestick
-fig.add_trace(go.Candlestick(x=df.index,
-                             open=df['Open'],
-                             high=df['High'],
-                             low=df['Low'],
-                             close=df['Close'],
-                             name='Candlestick'),
-                             row=1, col=1)
+fig.add_trace(
+    go.Candlestick(
+        x=df.index,
+        open=df["Open"],
+        high=df["High"],
+        low=df["Low"],
+        close=df["Close"],
+        name="Candlestick",
+    ),
+    row=1,
+    col=1,
+)
 
 # Adicionando as médias móveis
 # Adicionamos também médias móveis ao mesmo subplot para análise de tendências
-fig.add_trace(go.Scatter(x=df.index,
-                         y=df['MA7'],
-                         mode='lines',
-                         name='MA7 - Média Móvel 7 Dias'),
-                         row=1, col=1)
+fig.add_trace(
+    go.Scatter(x=df.index, y=df["MA7"], mode="lines", name="MA7 - Média Móvel 7 Dias"),
+    row=1,
+    col=1,
+)
 
-fig.add_trace(go.Scatter(x=df.index,
-                         y=df['MA14'],
-                         mode='lines',
-                         name='MA14 - Média Móvel 14 Dias'),
-                         row=1, col=1)
+fig.add_trace(
+    go.Scatter(
+        x=df.index, y=df["MA14"], mode="lines", name="MA14 - Média Móvel 14 Dias"
+    ),
+    row=1,
+    col=1,
+)
 
 # Adicionando o gráfico de barras para o volume
 # Em seguida, criamos um gráfico de barras para o volume de transações, que nos dá uma ideia da atividade de negociação naquele dia
-fig.add_trace(go.Bar(x=df.index,
-                     y=df['Volume'],
-                     name='Volume'),
-                     row=2, col=1)
+fig.add_trace(go.Bar(x=df.index, y=df["Volume"], name="Volume"), row=2, col=1)
 
 # Atualizando layout
-#Finalmente, configuramos o layout da figura, ajustando títulos, formatos de eixo e outras configurações para tornar o gráfico claro e legível.
-fig.update_layout(yaxis_title='Preço',
-                  xaxis_rangeslider_visible=False,  # Desativa o range slider
-                  width=1100, height=600)
+# Finalmente, configuramos o layout da figura, ajustando títulos, formatos de eixo e outras configurações para tornar o gráfico claro e legível.
+fig.update_layout(
+    yaxis_title="Preço",
+    xaxis_rangeslider_visible=False,  # Desativa o range slider
+    width=1100,
+    height=600,
+)
 
 # Mostrando o gráfico
 fig.show()
 
-mpf.plot(data.head(30), type='candle', figsize = (16,8), volume=True, mav=(7,14), style='yahoo')
+mpf.plot(
+    data.head(30),
+    type="candle",
+    figsize=(16, 8),
+    volume=True,
+    mav=(7, 14),
+    style="yahoo",
+)
