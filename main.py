@@ -134,3 +134,5 @@ fig.update_layout(yaxis_title='Preço',
 
 # Mostrando o gráfico
 fig.show()
+
+mpf.plot(data.head(30), type='candle', figsize = (16,8), volume=True, mav=(7,14), style='yahoo')
